@@ -1,7 +1,14 @@
+import configparser
 import os
 from typing import List, Dict
 import fitz
 import openpyxl
+
+config = configparser.ConfigParser()
+config.read("config.ini")
+
+pdf_file = config.get("Paths", "pdf_file")
+excel_file = config.get("Paths", "excel_file")
 
 
 def extract_blocks_from_pdf(file_path: str) -> List[Dict]:
@@ -172,8 +179,7 @@ def check_author_exists(sheet, session, author) -> bool:
     return False
 
 
-pdf_blocks = extract_blocks_from_pdf("beetroot_task.pdf")
-
-merged_blocks = merge_blocks(pdf_blocks)
-
-save_to_excel(merged_blocks, "result_.xlsx")
+if __name__ == "__main__":
+    pdf_blocks = extract_blocks_from_pdf(pdf_file)
+    merged_blocks = merge_blocks(pdf_blocks)
+    save_to_excel(merged_blocks, excel_file)
