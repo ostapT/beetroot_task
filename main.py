@@ -10,6 +10,8 @@ config.read("config.ini")
 pdf_file = config.get("Paths", "pdf_file")
 excel_file = config.get("Paths", "excel_file")
 
+start_page = 45
+
 
 def extract_blocks_from_pdf(file_path: str) -> List[Dict]:
     blocks = []
@@ -24,7 +26,7 @@ def extract_blocks_from_pdf(file_path: str) -> List[Dict]:
 
     doc = fitz.open(file_path)
 
-    for page_number in range(44 - 1, doc.page_count):
+    for page_number in range(start_page - 1, doc.page_count):
         page = doc.load_page(page_number)
         blocks_in_page = []
         text_blocks = page.get_text("dict")["blocks"]
